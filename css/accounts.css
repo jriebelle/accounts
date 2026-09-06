@@ -204,6 +204,9 @@ html, body {
 }
 
 /* Input Field - Glow removed on mouseover and focus */
+input,
+select,
+textarea,
 .form-input {
   width: 100%;
   height: 50px;
@@ -213,14 +216,16 @@ html, body {
   border-radius: 12px;
   color: var(--text-primary);
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 16px;
   outline: none;
   box-shadow: none;
   transition: var(--transition-smooth);
 }
 
-.form-input::placeholder {
+.form-input::placeholder,
+input::placeholder {
   color: var(--text-muted);
+  font-size: 16px;
 }
 
 .form-input:hover {
@@ -304,7 +309,7 @@ select.form-input option,
   border-radius: 12px 0 0 12px;
   color: var(--text-primary);
   font-family: inherit;
-  font-size: 0.88rem;
+  font-size: 16px;
   font-weight: 500;
   padding: 0 24px 0 12px;
   outline: none;
@@ -495,14 +500,14 @@ select.form-input option,
 
 .form-input.code-input {
   letter-spacing: 0.15em;
-  font-size: 1.1rem;
+  font-size: 16px;
   font-weight: 600;
 }
 
 .form-input.code-input::placeholder {
   letter-spacing: normal;
   font-weight: 400;
-  font-size: 0.95rem;
+  font-size: 16px;
 }
 
 /* Support Text Below the Box - Background removed */
