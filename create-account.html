@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create an account by verifying your email address.">
+  <title>Create an Account &bull; Accounts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/accounts.css">
+</head>
+<body>
+  <main class="page-container" id="mainContainer">
+    <div class="login-wrapper">
+      <!-- Centralized glassmorphic card (2-column layout) -->
+      <div class="login-card" id="createAccountCard">
+        <!-- Left column: Logo, Title & Subtitle -->
+        <div class="card-column-left">
+          <img src="img/shopkite-logo-white.png" alt="Shopkite" class="brand-logo">
+          <div class="header-text-group">
+            <h1 class="card-title"><span class="title-bold">Create an</span> <span class="title-light">Account</span></h1>
+            <p class="card-subtitle">Enter the verification code sent to <br><strong id="emailDisplay" style="color: #ffffff; word-break: break-all;">your email</strong></p>
+          </div>
+        </div>
+
+        <!-- Right column: Input fields & Confirm Button -->
+        <div class="card-column-right">
+          <form class="login-form" id="verifyForm" method="POST" action="#" novalidate>
+            <!-- Email inputted from the accounts page -->
+            <div class="form-group">
+              <div class="label-row">
+                <label for="email" class="form-label">Email Address</label>
+                <a href="accounts.html" class="change-email-link" id="changeEmailLink" title="Change email address">Change</a>
+              </div>
+              <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  class="form-input is-prefilled" 
+                  readonly 
+                  aria-readonly="true"
+                  tabindex="-1"
+                >
+              </div>
+              <p class="form-notice">Ensure to check both inbox and spam folders for the verification code</p>
+            </div>
+
+            <!-- Verification Code input field -->
+            <div class="form-group">
+              <div class="label-row">
+              <label for="code" class="form-label">Verification Code</label>
+              <button type="button" class="resend-link" id="resendBtn" disabled>Resend code in 2:00</button>
+            </div>
+              <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <input 
+                  type="text" 
+                  id="code" 
+                  name="code" 
+                  class="form-input code-input" 
+                  placeholder="Enter 6-digit code" 
+                  required 
+                  inputmode="numeric" 
+                  autocomplete="one-time-code"
+                  maxlength="8"
+                  spellcheck="false"
+                  autofocus
+                >
+              </div>
+            </div>
+
+            <!-- Confirm action button -->
+            <button type="submit" class="submit-btn" id="confirmBtn" aria-label="Confirm" disabled>
+              <span>Confirm</span>
+              <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Support text below the centralized box -->
+      <footer class="support-footer" id="supportFooter">
+        <p class="support-text">
+          having troubles signing in? Contact a "human" for support 
+          <a href="https://wa.me/2349062000393?text=Hello%2C%20I%20am%20having%20troubles%20creating%20an%20account" target="_blank" rel="noopener noreferrer" class="whatsapp-link" aria-label="Contact support on WhatsApp">
+            <svg class="whatsapp-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.52 3.48A11.93 11.93 0 0 0 12.06 0C5.46 0 .1 5.36.1 11.96c0 2.11.55 4.17 1.6 5.99L0 24l6.23-1.63a11.9 11.9 0 0 0 5.83 1.51h.01c6.6 0 11.96-5.36 11.96-11.96 0-3.2-1.25-6.2-3.51-8.44zM12.06 21.88h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.7 1 .98-3.61-.24-.38a9.92 9.92 0 0 1-1.52-5.34c0-5.48 4.46-9.94 9.95-9.94 2.65 0 5.15 1.03 7.03 2.91a9.88 9.88 0 0 1 2.91 7.02c0 5.49-4.46 9.94-9.96 9.94zm5.45-7.44c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.09 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"></path>
+            </svg>
+            <span>09062000393 via Whatsapp</span>
+          </a>
+        </p>
+      </footer>
+    </div>
+  </main>
+
+  <script src="js/accounts.js"></script>
+</body>
+</html>
