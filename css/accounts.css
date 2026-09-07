@@ -205,9 +205,9 @@ html, body {
 
 /* Input Field - Glow removed on mouseover and focus */
 input,
-select,
+select:not(.country-code-select),
 textarea,
-.form-input {
+.form-input:not(.country-code-select) {
   width: 100%;
   height: 50px;
   padding: 0 16px 0 46px;
@@ -296,6 +296,8 @@ select.form-input option,
 /* Phone Input Group with Country Code Select */
 .phone-input-group {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
   position: relative;
   width: 100%;
@@ -303,6 +305,11 @@ select.form-input option,
 
 .country-code-select {
   height: 50px;
+  width: 104px !important;
+  min-width: 104px !important;
+  max-width: 104px !important;
+  flex: 0 0 104px !important;
+  flex-shrink: 0 !important;
   background: var(--input-bg);
   border: 1px solid var(--input-border);
   border-right: none;
@@ -320,12 +327,12 @@ select.form-input option,
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.7)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 8px center;
-  flex-shrink: 0;
 }
 
 .country-code-select option {
   background-color: #22252c;
   color: #ffffff;
+  padding: 8px 12px;
 }
 
 .country-code-select:hover {
@@ -341,7 +348,9 @@ select.form-input option,
 .phone-input-group .form-input {
   border-radius: 0 12px 12px 0;
   padding-left: 14px;
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
 }
 
 .phone-input-group:focus-within .country-code-select {
@@ -809,5 +818,23 @@ select.form-input option,
 
   .modal-title {
     font-size: 1.3rem;
+  }
+
+  .phone-input-group {
+    flex-wrap: nowrap;
+  }
+
+  .country-code-select {
+    width: 98px !important;
+    min-width: 98px !important;
+    max-width: 98px !important;
+    flex: 0 0 98px !important;
+    padding: 0 20px 0 8px;
+    font-size: 15px;
+  }
+
+  .phone-input-group .form-input {
+    flex: 1 1 auto;
+    min-width: 0;
   }
 }
