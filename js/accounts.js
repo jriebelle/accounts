@@ -57,7 +57,7 @@ function initLoginPage() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* 2. Create Account / Verify Page (create-account.html, create-accounts.html)*/
+/* 2. Create Account / Verify Page (create-account.html)                      */
 /* -------------------------------------------------------------------------- */
 function initVerifyAccountPage() {
   const verifyForm = document.getElementById('verifyForm');
@@ -156,7 +156,7 @@ function initCompleteProfilePage() {
   const profileForm = document.getElementById('profileForm');
   if (!profileForm) return;
 
-  const fullname = document.getElementById('fullname');
+  const firstname = document.getElementById('firstname') || document.getElementById('fullname');
   const lastname = document.getElementById('lastname');
   const businessName = document.getElementById('businessName');
   const personalLine = document.getElementById('personalLine');
@@ -164,20 +164,20 @@ function initCompleteProfilePage() {
   const continueBtn = document.getElementById('continueBtn');
 
   function formatPhoneNumber(e) {
-    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 11);
+    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 13);
   }
 
   if (personalLine) personalLine.addEventListener('input', formatPhoneNumber);
   if (businessLine) businessLine.addEventListener('input', formatPhoneNumber);
 
   function checkProfileValidity() {
-    const isFullnameValid = fullname ? fullname.value.trim().length > 0 : false;
+    const isFirstnameValid = firstname ? firstname.value.trim().length > 0 : false;
     const isLastnameValid = lastname ? lastname.value.trim().length > 0 : false;
     const isBusinessNameValid = businessName ? businessName.value.trim().length > 0 : false;
-    const isBusinessLineValid = businessLine ? businessLine.value.trim().length === 11 : false;
-    const isPersonalLineValid = personalLine ? (personalLine.value.trim().length === 0 || personalLine.value.trim().length === 11) : true;
+    const isPersonalLineValid = personalLine ? (personalLine.value.trim().length >= 10 && personalLine.value.trim().length <= 13) : false;
+    const isBusinessLineValid = businessLine ? (businessLine.value.trim().length === 0 || (businessLine.value.trim().length >= 10 && businessLine.value.trim().length <= 13)) : true;
 
-    const isValid = isFullnameValid && isLastnameValid && isBusinessNameValid && isBusinessLineValid && isPersonalLineValid;
+    const isValid = isFirstnameValid && isLastnameValid && isBusinessNameValid && isPersonalLineValid && isBusinessLineValid;
 
     if (isValid) {
       profileForm.classList.add('has-valid-profile');
@@ -188,7 +188,7 @@ function initCompleteProfilePage() {
     }
   }
 
-  [fullname, lastname, businessName, personalLine, businessLine].forEach((input) => {
+  [firstname, lastname, businessName, personalLine, businessLine].forEach((input) => {
     if (input) {
       input.addEventListener('input', checkProfileValidity);
       input.addEventListener('change', checkProfileValidity);
@@ -200,26 +200,36 @@ function initCompleteProfilePage() {
   profileForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (continueBtn && !continueBtn.disabled) {
-      const countryCodeEl = document.getElementById('businessCountryCode');
-      const countryCode = countryCodeEl ? countryCodeEl.value : '+234';
-      const phone = `${countryCode} ${businessLine.value.trim()}`;
-      sessionStorage.setItem('businessLine', phone);
-      window.location.href = `confirm-business-number.html?phone=${encodeURIComponent(phone)}`;
+      const personalCountryCodeEl = document.getElementById('personalCountryCode');
+      const countryCode = personalCountryCodeEl ? personalCountryCodeEl.value : '+234';
+      const phone = `${countryCode} ${personalLine ? personalLine.value.trim() : ''}`;
+      sessionStorage.setItem('personalLine', phone);
+      sessionStorage.setItem('phoneToConfirm', phone);
+      if (businessLine && businessLine.value.trim().length > 0) {
+        const businessCountryCodeEl = document.getElementById('businessCountryCode');
+        const bCountryCode = businessCountryCodeEl ? businessCountryCodeEl.value : '+234';
+        sessionStorage.setItem('businessLine', `${bCountryCode} ${businessLine.value.trim()}`);
+      }
+      window.location.href = `confirm-personal-number.html?phone=${encodeURIComponent(phone)}`;
     }
   });
 }
 
 /* -------------------------------------------------------------------------- */
-/* 4. Confirm Business Number Page (confirm-business-number.html)             */
+/* 4. Confirm Personal Number Page (confirm-personal-number.html)             */
 /* -------------------------------------------------------------------------- */
 function initConfirmBusinessNumberPage() {
+  initConfirmPersonalNumberPage();
+}
+
+function initConfirmPersonalNumberPage() {
   const confirmNumberForm = document.getElementById('confirmNumberForm');
   if (!confirmNumberForm) return;
 
   const urlParams = new URLSearchParams(window.location.search);
-  const phoneParam = urlParams.get('phone') || sessionStorage.getItem('businessLine') || '+234 803 918 5918';
+  const phoneParam = urlParams.get('phone') || sessionStorage.getItem('personalLine') || sessionStorage.getItem('phoneToConfirm') || sessionStorage.getItem('businessLine') || '+234 803 918 5918';
 
-  const businessNumber = document.getElementById('businessNumber');
+  const personalNumber = document.getElementById('personalNumber') || document.getElementById('businessNumber');
   const phoneDisplay = document.getElementById('phoneDisplay');
   const changeNumberLink = document.getElementById('changeNumberLink');
   const verificationMethod = document.getElementById('verificationMethod');
@@ -229,8 +239,8 @@ function initConfirmBusinessNumberPage() {
   const confirmBtn = document.getElementById('confirmBtn');
   const resendBtn = document.getElementById('resendBtn');
 
-  if (businessNumber && phoneParam) {
-    businessNumber.value = phoneParam;
+  if (personalNumber && phoneParam) {
+    personalNumber.value = phoneParam;
     if (phoneDisplay) {
       phoneDisplay.textContent = phoneParam;
     }
@@ -325,7 +335,7 @@ function initConfirmBusinessNumberPage() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* 5. Create Password Page (create-password.html, create-passwords.html)      */
+/* 5. Create Password Page (create-password.html)                             */
 /* -------------------------------------------------------------------------- */
 function initCreatePasswordPage() {
   const createPasswordForm = document.getElementById('createPasswordForm');
